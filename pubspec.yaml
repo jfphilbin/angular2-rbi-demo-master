@@ -1,0 +1,16 @@
+name: contact_list
+version: 0.0.1
+description: 
+author: Jim Washington <washington.jim@gmail.com>
+environment:
+  sdk: '>=1.12.0 <2.0.0'
+dependencies:
+  angular2: "^2.0.0-beta.0"
+  browser: '^0.10.0+2'
+  angular2_rbi: any
+  uuid: any
+transformers:
+- angular2:
+    entry_points: web/main.dart
+dev_dependencies:
+  grinder: '^0.8.0+1'
