@@ -34,9 +34,9 @@ class EditContact implements AfterContentChecked {
         .get('uuid')
         .isNotEmpty) {
       uuid = _params.get('uuid');
-      Contact oldContact = _contacts.contactFromUuid(uuid);
+      Contact oldContact = _contacts.find(uuid);
       contact = new Contact(oldContact.last, oldContact.first, oldContact.phone,
-          oldContact.contactType, oldContact.uuid);
+          oldContact.type, oldContact.uuid);
     } else {
       contact = new Contact('', '', '', 'friend', '');
     }
@@ -58,8 +58,8 @@ class EditContact implements AfterContentChecked {
   }
 
   String get iconGlyph {
-    if (iconRepresentations.containsKey(contact.contactType)) {
-      return iconRepresentations[contact.contactType];
+    if (iconRepresentations.containsKey(contact.type)) {
+      return iconRepresentations[contact.type];
     }
     return 'insert_emoticon';
   }
@@ -76,10 +76,10 @@ class EditContact implements AfterContentChecked {
 
   void saveItem() {
     if (uuid == '') {
-      _contacts.addContact(
-          contact.last, contact.first, contact.phone, contact.contactType);
+      _contacts.add(
+          contact.last, contact.first, contact.phone, contact.type);
     } else {
-      _contacts.updateContact(contact);
+      _contacts.update(contact);
     }
     navigateOut();
   }

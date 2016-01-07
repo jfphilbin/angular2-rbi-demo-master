@@ -17,12 +17,12 @@ class DeleteConfirm {
 
   DeleteConfirm(this._contacts, this._params, this._router) {
     if (_params.get('uuid') != null) {
-      contact = _contacts.contactFromUuid(_params.get('uuid'));
+      contact = _contacts.find(_params.get('uuid'));
     }
   }
 
   void deleteItem(String uuid) {
-    if (contact != null) _contacts.removeContact(contact);
+    if (contact != null) _contacts.remove(contact);
     _router.navigate([
       'Default',
       {'filter': _contacts.currentFilter}

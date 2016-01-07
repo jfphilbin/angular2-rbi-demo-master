@@ -20,50 +20,7 @@ const String mdlDrawer = 'mdl-layout__drawer';
 
 @Component(
     selector: 'app',
-    template: '''<div class="mdl-layout mdl-js-layout">
-  <header class="mdl-layout__header">
-    <div class="mdl-layout__header-row">
-      <!-- Title -->
-      <span class="mdl-layout-title">Contacts</span>
-      <!-- Add spacer, to align navigation to the right -->
-      <div class="mdl-layout-spacer"></div>
-      <!-- Navigation -->
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" [routerLink]="['/Default', {'filter':''}]">All</a>
-        <a class="mdl-navigation__link" [routerLink]="['/Default',{'filter':'family'}]">Family</a>
-        <a class="mdl-navigation__link" [routerLink]="['/Default',{'filter':'friend'}]">Friends</a>
-        <a class="mdl-navigation__link" [routerLink]="['/Default',{'filter':'work'}]">Work</a>
-      </nav>
-      <button
-          class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
-          id="hdrbtn">
-        <i class="material-icons">more_vert</i>
-      </button>
-    </div>
-
-  </header>
-  <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Contacts</span>
-    <nav class="mdl-navigation" (click)="toggleDrawer()">
-      <a class="mdl-navigation__link" [routerLink]="['/Default', {'filter':''}]">All</a>
-      <a class="mdl-navigation__link" [routerLink]="['/Default', {'filter':'family'}]">Family</a>
-      <a class="mdl-navigation__link" [routerLink]="['/Default', {'filter':'friend'}]">Friends</a>
-      <a class="mdl-navigation__link" [routerLink]="['/Default', {'filter':'work'}]">Work</a>
-    </nav>
-  </div>
-  <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="hdrbtn">
-     <!--we use buttons here instead of <li> so disabled works.-->
-     <button class="mdl-menu__item" [disabled]="examplesLoaded==true" href="#" (click)="importJson()">Load JSON</button>
-     <button class="mdl-menu__item" href="#" (click)="exportJson()">JSON Export</button>
-  </ul>
-  <main class="mdl-layout__content">
-    <div *ngIf="loading" class="spinner">
-    <div class="mdl-spinner mdl-js-spinner is-active"></div>
-    </div>
-    <div class="page-content"><router-outlet></router-outlet></div>
-  </main>
-</div>
-    ''',
+    templateUrl: 'app.html',
     directives: const [
       ContactList,
       MaterialButton,
@@ -104,9 +61,9 @@ class App {
     _router.navigate(['Json']);
   }
 
-  Future importJson([String imputFile = 'contacts.json']) async {
+  Future importJson([String inputFile = 'contacts.json']) async {
     loading = true;
-    String data = await HttpRequest.getString(imputFile);
+    String data = await HttpRequest.getString(inputFile);
 
     // just a bit of delay so the spinner shows
     new Timer(new Duration(seconds: 5), () {
@@ -114,7 +71,7 @@ class App {
       examplesLoaded = true;
 
       for (Map item in exampleData) {
-        _contacts.addContact(item['last'], item['first'], item['phone'],
+        _contacts.add(item['last'], item['first'], item['phone'],
             item['contactType'], item['uuid']);
       }
       //refresh page with the new data

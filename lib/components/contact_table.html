@@ -1,0 +1,32 @@
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp"
+    <thead>
+      <tr>
+        {{table.headers}}
+        <th>Delete</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="#contact of contacts">
+        {{contact.data}}
+        <td>
+          <button (click)="delete(contact.uuid)"
+                    class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+          Delete
+          </button>
+        </td>
+        <td>
+          <button (click)="edit(contact.uuid)"
+                  class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+<button class="edit-button mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--fab
+    mdl-button--colored"
+        (click)="edit('')">
+  <i class="material-icons">person_add</i>
+</button>

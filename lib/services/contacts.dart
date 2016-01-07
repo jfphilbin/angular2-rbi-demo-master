@@ -8,53 +8,47 @@ final Uuid uuidGenerator = new Uuid();
 @Injectable()
 class Contacts {
   List<Contact> contacts = [];
+  String currentFilter;
 
   int get length => contacts.length;
-  String currentFilter;
 
   final List<String> _types = ['family', 'friend', 'work'];
 
-  void addContact(String last, String first, String phone,
-      [String contactType, String uuid]) {
-    if (uuid == null || uuid == '') {
-      uuid = uuidGenerator.v4();
-    }
-    if (contactType == null || contactType == '') {
-      contactType = 'friend';
-    }
-    contacts.add(new Contact(last, first, phone, contactType, uuid));
-    sortContacts();
+  void add(String last, String first, String phone,
+      [String type, String uuid]) {
+    if (uuid == null || uuid == '') uuid = uuidGenerator.v4();
+    if (type == null || type == '') type = 'friend';
+    contacts.add(new Contact(last, first, phone, type, uuid));
+    sort();
   }
 
-  void sortContacts() {
+  void sort() {
     contacts.sort((a, b) {
       return (a.last + a.first).compareTo(b.last + b.first);
     });
   }
 
-  void updateContact(Contact aContact) {
-    Contact oldContact = contactFromUuid(aContact.uuid);
-    int idx = contacts.indexOf(oldContact);
-    contacts[idx] = aContact;
-    sortContacts();
+  void update(Contact c) {
+    Contact old = find(c.uuid);
+    int idx = contacts.indexOf(old);
+    contacts[idx] = c;
+    sort();
   }
 
-  bool removeContact(Contact contact) => contacts.remove(contact);
+  bool remove(Contact c) => contacts.remove(c);
 
-  Contact contactFromUuid(String uuid) {
+  Contact find(String uuid) {
     for (Contact item in contacts) {
-      if (item.uuid == uuid) {
-        return item;
-      }
+      if (item.uuid == uuid) return item;
     }
     return null;
   }
 
-  List<Contact> filteredContacts(String aFilter) {
-    if (!_types.contains(aFilter)) return contacts;
-    return contacts.where((c) {
-      return c.contactType == aFilter;
-    }).toList();
+  List<Contact> filter(String type) {
+    bool _filter(Contact c) => c.type == type;
+
+    if (!_types.contains(type)) return contacts;
+    return contacts.where(_filter).toList();
   }
 
   List<Contact> toJson() {
@@ -63,16 +57,16 @@ class Contacts {
 }
 
 class Contact {
-  String last, first, phone, contactType;
+  String last, first, phone, type;
   final String uuid;
 
-  Contact(this.last, this.first, this.phone, this.contactType, this.uuid);
+  Contact(this.last, this.first, this.phone, this.type, this.uuid);
 
   Map<String, String> toJson() => {
     'uuid': uuid,
     'last': last,
     'first': first,
     'phone': phone,
-    'contactType': contactType
+    'contactType': type
   };
 }
