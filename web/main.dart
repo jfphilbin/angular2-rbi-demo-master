@@ -4,6 +4,7 @@ import 'package:angular2/router.dart';
 import 'package:contact_list/app.dart';
 import 'package:contact_list/services/contacts.dart';
 
+@AngularEntrypoint()
 void main() {
   bootstrap(App, [
     Contacts,

@@ -30,12 +30,14 @@ const String mdlDrawer = 'mdl-layout__drawer';
       MaterialSpinner,
       NgIf
     ])
+
 @RouteConfig(const [
   const Route(path: '/:filter', component: ContactList, name: 'Default'),
   const Route(path: '/json', component: JsonExport, name: 'Json'),
   const Route(path: '/delete:uuid', component: DeleteConfirm, name: 'Delete'),
   const Route(path: '/edit:uuid', component: EditContact, name: 'Edit')
 ])
+
 class App {
   bool examplesLoaded = false;
   bool loading = false;

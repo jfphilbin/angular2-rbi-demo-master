@@ -22,7 +22,7 @@ class ContactList {
   final Contacts _data;
   final RouteParams _params;
   final Router _router;
-  bool isLoaded false;
+  bool isLoaded = false;
   String filter = '';
   List<Contact> contacts;
 
